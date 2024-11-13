@@ -26,21 +26,27 @@
   <div id="userName">Загрузка...</div>
 
   <script>
-    // Получаем информацию о пользователе через Telegram API
-    Telegram.WebApp.ready();
-    Telegram.WebApp.MainButton.onClick(() => {
-      console.log("Кнопка нажата"); // Добавил для проверки
-    });
+  Telegram.WebApp.ready();
 
+  Telegram.WebApp.getUserInfo()
+    .then(user => {
+      console.log("User info:", user); // Вывод информации о пользователе в консоль
 
-    Telegram.WebApp.getUserInfo().then(user => {
-      if (user && user.photo_url) {
-        document.getElementById('userImage').src = user.photo_url;
+      if (user) {
+        if (user.photo_url) {
+          document.getElementById('userImage').src = user.photo_url;
+        }
+        document.getElementById('userName').textContent = user.first_name || "Имя не указано"; // Обработка отсутствующего имени
+      } else {
+        console.error("getUserInfo() вернул null или undefined");
+        document.getElementById('userName').textContent = "Гость";
       }
-      document.getElementById('userName').textContent = user ? user.first_name : "Гость";
+    })
+    .catch(error => {
+      console.error("Ошибка при получении информации о пользователе:", error);
+      document.getElementById('userName').textContent = "Ошибка";
     });
-
-  </script>
+</script>
 
 </body>
 </html>

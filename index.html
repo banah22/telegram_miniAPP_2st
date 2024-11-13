@@ -29,6 +29,9 @@
   Telegram.WebApp.ready();
 
   Telegram.WebApp.getUserInfo()
+console.log("User info:", user);
+  
+  <comment>
     .then(user => {
       console.log("User info:", user); // Вывод информации о пользователе в консоль
 
@@ -46,6 +49,8 @@
       console.error("Ошибка при получении информации о пользователе:", error);
       document.getElementById('userName').textContent = "Ошибка";
     });
+
+  </comment>
 </script>
 
 </body>

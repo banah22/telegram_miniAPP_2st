@@ -23,15 +23,26 @@
 <body>
 
   <img id="userImage" src="placeholder.jpg" alt="User Image">
-  <div id="userName">! Загрузка...</div>
+  <div id="userName">!! Загрузка...</div>
 
   <script>
   Telegram.WebApp.ready();
 
+  console.log("initData:", Telegram.WebApp.initData);
+  console.log("Viewport Height:", Telegram.WebApp.viewportHeight);
+  Telegram.WebApp.MainButton.setText('Тест API'); // Изменит текст кнопки, если она есть
+
   Telegram.WebApp.getUserInfo()
-console.log("User info:", user);
+    .then(user => {
+      console.log("User info:", user);
+    })
+    .catch(error => {
+      console.error("Ошибка при получении информации о пользователе:", error);
+    });
+
   
   <comment>
+    Telegram.WebApp.getUserInfo()
     .then(user => {
       console.log("User info:", user); // Вывод информации о пользователе в консоль
 

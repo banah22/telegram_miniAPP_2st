@@ -6,10 +6,9 @@
 </head>
 <body>
 
-  <div id="initDataContainer">Init Data:</div> <div id="userData">User Data:</div>
-<img id="userImage" src="placeholder.jpg" alt="User Image">
-<button onclick="Telegram.WebApp.expand()">Expand</button>
-
+  <div id="initDataContainer">Init Data:</div>
+  <div id="userData">User Data:</div>
+  <img id="userImage" src="placeholder.jpg" alt="User Image">
 
   <script>
     Telegram.WebApp.ready();
@@ -17,14 +16,14 @@
     const initDataContainer = document.getElementById('initDataContainer');
     initDataContainer.textContent += JSON.stringify(Telegram.WebApp.initData);
 
-    Telegram.WebApp.getUserInfo().then(user => {
+    Telegram.WebApp.getUserInfo()
+      .then(user => {
         const userDataContainer = document.getElementById('userData');
         userDataContainer.textContent += JSON.stringify(user);
         if (user && user.photo_url) {
           document.getElementById('userImage').src = user.photo_url;
         }
-    });
-
+      });
   </script>
 
 </body>

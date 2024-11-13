@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Mini App</title>
   <style>
     #output {
-      white-space: pre-wrap; /* Для корректного отображения переносов строк */
+      white-space: pre-wrap; /* For proper line breaks */
     }
   </style>
 </head>
@@ -13,58 +13,57 @@
 
   <img src="placeholder.jpg" alt="Test Image">
 
-
   <div id="output"></div>
 
   <script>
-
+    // Wait for DOM content to be fully loaded
     document.addEventListener('DOMContentLoaded', () => {
-      document.getElementById('output').textContent += 'Page loaded!\n'
-});
-    
-    Telegram.WebApp.ready();
+      const outputDiv = document.getElementById('output');
 
-    const outputDiv = document.getElementById('output');
+      // Initialize Telegram Web App
+      Telegram.WebApp.ready();
 
-    function logToMiniApp(message) {
-      outputDiv.textContent += message + '\n';
-    }
-
-    logToMiniApp("Init Data: " + JSON.stringify(Telegram.WebApp.initData));
-    logToMiniApp("API Version: " + Telegram.WebApp.version);
-    logToMiniApp("Color Scheme: " + Telegram.WebApp.colorScheme);
-    logToMiniApp("Language: " + Telegram.WebApp.language);
-
-
-   Telegram.WebApp.getUserInfo()
-  .then(user => {
-    logToMiniApp("User Data: " + JSON.stringify(user)); // Вывод в <div id="output">
-    if (user) { //  Проверяем, что user не null
-      if (user.photo_url) {
-        // ... (код для отображения фото)
+      function logToMiniApp(message) {
+        outputDiv.textContent += message + '\n';
       }
-       // Отображаем имя, даже если оно пустое
-      logToMiniApp("User First Name: " + (user.first_name || "Имя не указано"));  
-    } else {
-      logToMiniApp("User Data is null"); //  Вывод сообщения, если user null
-    }
-  })
-  .catch(error => {
-    logToMiniApp("Error getting user info: " + error); //  Вывод ошибки, если есть
-  });
-    
 
+      logToMiniApp("Init Data: " + JSON.stringify(Telegram.WebApp.initData));
+      logToMiniApp("API Version: " + Telegram.WebApp.version);
+      logToMiniApp("Color Scheme: " + Telegram.WebApp.colorScheme);
+      logToMiniApp("Language: " + Telegram.WebApp.language);
 
-    if (Telegram.WebApp.MainButton.isVisible) {
-      logToMiniApp("Main Button is visible");
-    }
+      // Get user info
+      Telegram.WebApp.getUserInfo()
+        .then(user => {
+          logToMiniApp("User Data: " + JSON.stringify(user));
+          if (user) {
+            if (user.photo_url) {
+              // Display user photo if available
+              logToMiniApp("User Photo URL: " + user.photo_url);
+            }
+            logToMiniApp("User First Name: " + (user.first_name || "Имя не указано"));
+          } else {
+            logToMiniApp("User Data is null");
+          }
+        })
+        .catch(error => {
+          logToMiniApp("Error getting user info: " + error);
+        });
 
-    Telegram.WebApp.BackButton.onClick(() => {
-      logToMiniApp("Back button clicked");
-    });
+      // Check visibility of Main Button
+      if (Telegram.WebApp.MainButton.isVisible) {
+        logToMiniApp("Main Button is visible");
+      }
 
-    Telegram.WebApp.onEvent('themeChanged', () => {
-      logToMiniApp("Theme changed");
+      // Handle Back Button click
+      Telegram.WebApp.BackButton.onClick(() => {
+        logToMiniApp("Back button clicked");
+      });
+
+      // Handle theme change event
+      Telegram.WebApp.onEvent('themeChanged', () => {
+        logToMiniApp("Theme changed");
+      });
     });
   </script>
 

@@ -17,6 +17,11 @@
   <div id="output"></div>
 
   <script>
+
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('output').textContent += 'Page loaded!\n'
+});
+    
     Telegram.WebApp.ready();
 
     const outputDiv = document.getElementById('output');

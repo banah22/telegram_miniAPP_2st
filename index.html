@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mini App</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+    img {
+      max-width: 200px;
+      height: auto;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <img id="userImage" src="placeholder.jpg" alt="User Image">
+  <div id="userName">Загрузка...</div>
+
+  <script>
+    // Получаем информацию о пользователе через Telegram API
+    Telegram.WebApp.ready();
+    Telegram.WebApp.MainButton.onClick(() => {
+      console.log("Кнопка нажата"); // Добавил для проверки
+    });
+
+
+    Telegram.WebApp.getUserInfo().then(user => {
+      if (user && user.photo_url) {
+        document.getElementById('userImage').src = user.photo_url;
+      }
+      document.getElementById('userName').textContent = user ? user.first_name : "Гость";
+    });
+
+  </script>
+
+</body>
+</html>

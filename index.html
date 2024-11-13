@@ -31,18 +31,23 @@
     logToMiniApp("Language: " + Telegram.WebApp.language);
 
 
-    Telegram.WebApp.getUserInfo()
-      .then(user => {
-        logToMiniApp("User Data: " + JSON.stringify(user));
-        if (user && user.photo_url) {
-          const img = document.createElement('img');
-          img.src = user.photo_url;
-          document.body.appendChild(img);
-        }
-      })
-      .catch(error => {
-        logToMiniApp("Error getting user info: " + error);
-      });
+   Telegram.WebApp.getUserInfo()
+  .then(user => {
+    logToMiniApp("User Data: " + JSON.stringify(user)); // Вывод в <div id="output">
+    if (user) { //  Проверяем, что user не null
+      if (user.photo_url) {
+        // ... (код для отображения фото)
+      }
+       // Отображаем имя, даже если оно пустое
+      logToMiniApp("User First Name: " + (user.first_name || "Имя не указано"));  
+    } else {
+      logToMiniApp("User Data is null"); //  Вывод сообщения, если user null
+    }
+  })
+  .catch(error => {
+    logToMiniApp("Error getting user info: " + error); //  Вывод ошибки, если есть
+  });
+    
 
 
     if (Telegram.WebApp.MainButton.isVisible) {
